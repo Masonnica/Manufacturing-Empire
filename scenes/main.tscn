@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://s6l1bwfbp2ie"]
+
+[ext_resource type="Script" uid="uid://b18yvvkt2wr7c" path="res://scripts/camera.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://bhlmtee8f6007" path="res://scripts/main.gd" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://bcvxug5kkrpja" path="res://scripts/terrain.gd" id="2_0wfyh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
+
+[sub_resource type="Sky" id="Sky_0wfyh"]
+sky_material = SubResource("ProceduralSkyMaterial_o5qli")
+
+[sub_resource type="Environment" id="Environment_sugp2"]
+background_mode = 2
+sky = SubResource("Sky_0wfyh")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_o5qli"]
+size = Vector2(100, 100)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_sugp2")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 20, 0)
+script = ExtResource("1_o5qli")
+
+[node name="Game" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Game"]
+environment = SubResource("Environment_sugp2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Game"]
+visible = false
+mesh = SubResource("PlaneMesh_o5qli")
+
+[node name="Terrain" type="Node" parent="Game"]
+script = ExtResource("2_0wfyh")
+
+[node name="Mesh" type="MeshInstance3D" parent="Game/Terrain"]
+
+[node name="UI" type="CanvasLayer" parent="."]
