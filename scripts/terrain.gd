@@ -8,7 +8,7 @@ var noise_map = preload("res://scripts/noise_map.gd").new()
 
 func expand_chunk(direction: Vector2i):
 	Global.world_size += direction.abs() * 10
-	Global.world_origin -= direction * 10
+	Global.position_origin_chunk -= direction
 	
 	if direction.x < 0:
 		Global.rect_chunk.x += direction.x
@@ -45,19 +45,24 @@ func update_mesh():
 	
 	var height_map := Image.load_from_file("res://temps/height_map.png")
 	
-	for x in range(6):
-		for y in range(6):
-			build_mesh_chunk(
-				st,
-				Vector2i(
-					chunk.x + x - 2,
-					chunk.y + y - 2,
-				),
-				height_map,
-			)
+	build_mesh_chunk(
+		st,
+		chunk,
+		Vector4i(20, 20, 20, 20),
+		height_map,
+	)
 	
-	mesh.mesh = st.commit()
-	
+	# mesh.mesh = st.commit()
 
-func build_mesh_chunk(st: SurfaceTool, chunk: Vector2i, height_map: Image):
-	pass
+func build_mesh_chunk(
+	st: SurfaceTool,
+	chunk: Vector2i,
+	offset: Vector4i,
+	height_map: Image,
+):
+	var rect_heigh_map_cropped = Vector4i(
+		(chunk.x + Global.position_origin_chunk.x -1) * 10 - offset.x,
+		(chunk.y + Global.position_origin_chunk.y -1) * 10 - offset.y,
+		(chunk.x * 10) + offset.z,
+		(chunk.y * 10) + offset.w,
+	)

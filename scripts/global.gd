@@ -6,7 +6,7 @@ extends Node
 var world_seed: int = 0
 var world_path: String = ""
 var world_size: Vector2i = Vector2i(210, 210)
-var world_origin: Vector2i = Vector2i(105, 105)
+var position_origin_chunk: Vector2i = Vector2i(3, 3)
 var rect_chunk: Vector4i = Vector4i(-10, -10, 10, 10) # (x1, y1, x2, y2)
 
 # ===============================
